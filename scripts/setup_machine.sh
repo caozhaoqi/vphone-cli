@@ -42,7 +42,9 @@ require_cmd() {
 }
 
 collect_vm_lock_pids() {
-  local -a paths pids file_pids
+  local -a paths pids
+  local path pid
+  typeset -U pids
 
   paths=(
     "${VM_DIR_ABS}/nvram.bin"
@@ -53,13 +55,13 @@ collect_vm_lock_pids() {
 
   for path in "${paths[@]}"; do
     [[ -e "$path" ]] || continue
-    file_pids=("${(@f)$(lsof -t -- "$path" 2>/dev/null || true)}")
-    for pid in "${file_pids[@]}"; do
-      [[ -n "$pid" ]] && pids+=("$pid")
-    done
+    while IFS= read -r pid; do
+      [[ "$pid" == <-> ]] || continue
+      [[ "$pid" == "$$" ]] && continue
+      pids+=("$pid")
+    done < <(lsof -t -- "$path" 2>/dev/null || true)
   done
 
-  pids=("${(@u)pids}")
   (( ${#pids[@]} > 0 )) && print -l -- "${pids[@]}" || true
 }
 
