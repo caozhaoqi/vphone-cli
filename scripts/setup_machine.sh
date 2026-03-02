@@ -70,7 +70,7 @@ check_vm_storage_locks() {
   fi
 
   local -a lock_pids
-  lock_pids=("${(@f)$(collect_vm_lock_pids)}")
+  lock_pids=(${(@f)$(collect_vm_lock_pids)})
   (( ${#lock_pids[@]} == 0 )) && return
 
   echo "[-] VM storage files are currently in use: ${VM_DIR_ABS}"
@@ -92,7 +92,7 @@ check_vm_storage_locks() {
     done
     sleep 1
 
-    lock_pids=("${(@f)$(collect_vm_lock_pids)}")
+    lock_pids=(${(@f)$(collect_vm_lock_pids)})
     (( ${#lock_pids[@]} == 0 )) && { echo "[+] Cleared VM storage locks"; return; }
     echo "[-] VM storage locks still present after AUTO_KILL_VM_LOCKS attempt."
   fi
