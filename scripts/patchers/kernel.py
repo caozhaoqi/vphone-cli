@@ -81,12 +81,13 @@ def _rd64(buf, off):
 class KernelPatcher:
     """Dynamic kernel patcher — all offsets found at runtime."""
 
-    def __init__(self, data, verbose=True):
+    def __init__(self, data, verbose=False):
         self.data = data  # bytearray (mutable)
         self.raw = bytes(data)  # immutable snapshot for searching
         self.size = len(data)
         self.patches = []  # collected (offset, bytes, description)
         self.verbose = verbose
+        self._patch_num = 0  # running counter for clean one-liners
 
         self._log("[*] Parsing Mach-O segments …")
         self._parse_macho()
