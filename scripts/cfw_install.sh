@@ -64,12 +64,13 @@ _sshpass() {
 }
 
 _ssh_retry() {
-  local attempt rc
-  for attempt in $(seq 1 $SSH_RETRY); do
+  local attempt rc label
+  label=${2:-cmd}
+  for ((attempt = 1; attempt <= SSH_RETRY; attempt++)); do
     "$@" && return 0
     rc=$?
     [[ $rc -ne 255 ]] && return $rc   # real command failure — don't retry
-    echo "  [${2}] connection lost (attempt $attempt/$SSH_RETRY), retrying in 3s..." >&2
+    echo "  [${label}] connection lost (attempt $attempt/$SSH_RETRY), retrying in 3s..." >&2
     sleep 3
   done
   return 255
