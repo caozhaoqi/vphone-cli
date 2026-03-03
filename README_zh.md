@@ -1,4 +1,4 @@
-<div align="right"><strong><a href="./README_ja.md">🇯🇵日本語</a></strong> | <strong>🇨🇳中文</strong> | <strong><a href="./README.md">🇬🇧English</a></strong></div>
+<div align="right"><strong><a href="./README_ko.md">🇰🇷한국어</a></strong> | <strong><a href="./README_ja.md">🇯🇵日本語</a></strong> | <strong>🇨🇳中文</strong> | <strong><a href="./README.md">🇬🇧English</a></strong></div>
 
 # vphone-cli
 
@@ -210,3 +210,9 @@ export CLOUDOS_SOURCE=/path/to/some_os.ipsw
 make fw_prepare
 make fw_patch
 ```
+
+我们的补丁是通过二进制分析（binary analysis）而非静态偏移（static offsets）应用的，因此更新的版本应该也能正常工作。如果出现问题，可以寻求 AI 的帮助。
+
+## 致谢
+
+- [wh1te4ever/super-tart-vphone-writeup](https://github.com/wh1te4ever/super-tart-vphone-writeup)
